@@ -10,10 +10,14 @@ import gerenciamento_de_consultas_medicas.entities.Consulta;
 import gerenciamento_de_consultas_medicas.entities.ConsultaStatus;
 import gerenciamento_de_consultas_medicas.entities.Medico;
 import gerenciamento_de_consultas_medicas.entities.Paciente;
+import gerenciamento_de_consultas_medicas.mappers.MedicoMapper;
+import gerenciamento_de_consultas_medicas.mappers.PacienteMapper;
 
 public class AgendarConsultaInteractor implements AgendarConsultaInputPort{
 
 	private final ConsultaRepository repo;
+	private final MedicoMapper medicoMapper = new MedicoMapper();
+	private final PacienteMapper pacienteMapper = new PacienteMapper();
 	
 	public AgendarConsultaInteractor(ConsultaRepository repo) {
 		this.repo = repo;
@@ -25,16 +29,8 @@ public class AgendarConsultaInteractor implements AgendarConsultaInputPort{
 		Medico medico = new Medico();
 		Paciente paciente = new Paciente();
 		
-		medico.setId(medicoDto.getId());
-		medico.setNome(medicoDto.getNome());
-		medico.setEspecialidade(medicoDto.getEspecialidade());
-		medico.setCrm(medicoDto.getCrm());
-		
-		paciente.setId(pacienteDto.getId());
-		paciente.setNome(pacienteDto.getNome());
-		paciente.setCpf(pacienteDto.getCpf());
-		paciente.setData_De_nascimento(pacienteDto.getData_de_nascimento());
-		paciente.setTelefone(pacienteDto.getTelefone());
+		medicoMapper.map(medico, medicoDto);
+		pacienteMapper.map(paciente, pacienteDto);
 		
 		consulta.setData(date);
 		consulta.setMedico(medico);
