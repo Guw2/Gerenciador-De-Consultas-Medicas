@@ -8,13 +8,14 @@ import gerenciamento_de_consultas_medicas.entities.Paciente;
 
 public class InMemoryPacienteRepository implements PacienteRepository {
 
+	private static Long ID_NOW = 1L;
 	private HashMap<Long, Paciente> pacientes = new HashMap<Long, Paciente>();
 	
 	@Override
 	public void save(Paciente paciente) {
-		Long id = pacientes.keySet().size() + 1L;
-		paciente.setId(id);
-		pacientes.put(id, paciente);
+		paciente.setId(ID_NOW);
+		pacientes.put(ID_NOW, paciente);
+		ID_NOW++;
 	}
 
 	@Override

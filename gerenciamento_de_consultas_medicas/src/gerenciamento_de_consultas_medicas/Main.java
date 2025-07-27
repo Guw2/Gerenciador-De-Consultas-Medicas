@@ -1,6 +1,5 @@
 package gerenciamento_de_consultas_medicas;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Random;
 
@@ -23,9 +22,10 @@ public class Main {
 		PacienteController controller = new PacienteController(input);
 		MostrarPacienteOutputPort output = new MostrarPacienteInteractor();
 		
+		controller.cadastrar(gerarPaciente());
+		controller.cadastrar(gerarPaciente());
 		controller.cadastrar(paciente);
 		
-		output.mostrar(paciente);
 		
 	}
 	
