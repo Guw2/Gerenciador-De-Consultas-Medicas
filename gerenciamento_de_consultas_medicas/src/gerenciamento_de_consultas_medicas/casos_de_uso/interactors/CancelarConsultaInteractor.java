@@ -1,0 +1,23 @@
+package gerenciamento_de_consultas_medicas.casos_de_uso.interactors;
+
+import gerenciamento_de_consultas_medicas.casos_de_uso.input.CancelarConsultaInputPort;
+import gerenciamento_de_consultas_medicas.casos_de_uso.repositories.ConsultaRepository;
+import gerenciamento_de_consultas_medicas.entities.Consulta;
+import gerenciamento_de_consultas_medicas.entities.ConsultaStatus;
+
+public class CancelarConsultaInteractor implements CancelarConsultaInputPort{
+
+	private final ConsultaRepository repo;
+	
+	public CancelarConsultaInteractor(ConsultaRepository repo) {
+		this.repo = repo;
+	}
+
+	@Override
+	public void cancelar(Long id) {
+		Consulta consulta = repo.findById(id).get();
+		consulta.setStatus(ConsultaStatus.CANCELADO);
+		repo.save(consulta);
+	}
+
+}
