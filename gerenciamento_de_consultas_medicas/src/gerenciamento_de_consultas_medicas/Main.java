@@ -7,6 +7,8 @@ import gerenciamento_de_consultas_medicas.adapters.controllers.PacienteControlle
 import gerenciamento_de_consultas_medicas.adapters.db.InMemoryConsultaRepository;
 import gerenciamento_de_consultas_medicas.adapters.db.InMemoryMedicoRepository;
 import gerenciamento_de_consultas_medicas.adapters.db.InMemoryPacienteRepository;
+import gerenciamento_de_consultas_medicas.adapters.presenters.ConsultaPresenter;
+import gerenciamento_de_consultas_medicas.adapters.presenters.PacientePresenter;
 import gerenciamento_de_consultas_medicas.casos_de_uso.input.AgendarConsultaInputPort;
 import gerenciamento_de_consultas_medicas.casos_de_uso.input.CadastrarMedicoInputPort;
 import gerenciamento_de_consultas_medicas.casos_de_uso.input.CadastrarPacienteInputPort;
@@ -34,8 +36,10 @@ public class Main {
 		PacienteRepository paciente_repo = new InMemoryPacienteRepository();
 		CadastrarPacienteInputPort cadastrar_paciente = new CadastrarPacienteInteractor(paciente_repo);
 		PacienteController pacienteController = new PacienteController(cadastrar_paciente);
-		MostrarPacienteOutputPort mostrar_paciente = new MostrarPacienteInteractor();
-		
+		MostrarPacienteOutputPort output_paciente = new MostrarPacienteInteractor();
+		PacientePresenter paciente_presenter = new PacientePresenter(output_paciente);
+
+		//paciente_presenter.mostrar(paciente);
 		// -----
 		
 		MedicoDTO medico = gerarMedico();
@@ -49,12 +53,13 @@ public class Main {
 		ConsultaRepository consulta_repo = new InMemoryConsultaRepository();
 		AgendarConsultaInputPort agendar_consulta = new AgendarConsultaInteractor(consulta_repo);
 		agendar_consulta.agendar(medico, paciente, LocalDate.of(2025, 10, 05));
-		ListarConsultasDoPacienteOutputPort listar_consultas = new ListarConsultasDoPacienteInteractor(consulta_repo);
+		ListarConsultasDoPacienteOutputPort output_consultas = new ListarConsultasDoPacienteInteractor(consulta_repo);
+		ConsultaPresenter consulta_presenter = new ConsultaPresenter(output_consultas);
 		
 		CancelarConsultaInputPort cancelar_consulta = new CancelarConsultaInteractor(consulta_repo);
 		cancelar_consulta.cancelar(1L);
 		
-		listar_consultas.listar(paciente, true);
+		consulta_presenter.listar(paciente, true);
 		
 	}
 	
