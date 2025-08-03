@@ -22,7 +22,7 @@ public class InMemoryMedicoRepository implements MedicoRepository{
 			
 			medico.setId(ID_NOW);
 			medicos.put(ID_NOW, medico);
-			ID_NOW++;		
+			ID_NOW++;
 		} else {
 			medicos.put(medico.getId(), medico);
 		}
